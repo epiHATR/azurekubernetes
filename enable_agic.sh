@@ -21,15 +21,15 @@ agicIdentity=$(az aks show -n $AKS_NAME -g $AKS_RG --query "addonProfiles.ingres
 loop=1
 while [ $loop -le 100 ]
 do
+    # get AKS VMSS ID
+    aksVmssId=$(az vmss list -g $nodeResourceGroup --query "[0].id" -o tsv  | tr -d '\r')
+    
     if [[ -z $aksVmssId ]]
     then
         echo "VMSS has not available yet, refresh checking in 1 minute"
         sleep 60
         loop=$(( $loop + 1))
     else
-        # get AKS VMSS ID
-        aksVmssId=$(az vmss list -g $nodeResourceGroup --query "[0].id" -o tsv  | tr -d '\r')
-
         # assign AGIC identity to VMSS
         az vmss identity assign --ids $aksVmssId --identities $agicIdentity
 
@@ -43,6 +43,7 @@ do
         then
             # create role assigment to Application Gateway
             az role assignment create --assignee-object-id $agicIdentitySP --assignee-principal-type ServicePrincipal --role 'Contributor' --scope $appGWId
+            break
         else
             exit 1
         fi

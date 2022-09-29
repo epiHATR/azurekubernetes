@@ -10,8 +10,9 @@
 #
 # for common information
 export LOCATION="northeurope"
-export AKS_NAME="cli-aks"
 export AKS_RG="cli-aks"
+
+export AKS_NAME="cli-aks"
 export AKS_NODE_RG="cli-aks-rg"
 export NODE_COUNT="3"
 export NODE_POOL="linuxpool"
@@ -22,6 +23,7 @@ export VNET_NAME="cli-vnet"
 export VNET_PREFIX="10.80.0.0/16"
 export AKS_SUBNET_NAME="cli-aks"
 export AKS_SUBNET_PREFIX="10.80.1.0/24"
+
 export PIP_NAME="cli-pip"
 export PIP_DNS_NAME="cli-pip-dns"
 export APPGW_NAME="cli-appgw"
