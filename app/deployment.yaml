@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment
+  labels:
+    app: nodejs-deployment
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nodejs-deployment
+  template:
+    metadata:
+      labels:
+        app: nodejs-deployment
+    spec:
+      containers:
+      - name: nodejs-deployment
+        image: hidetran/simple-express:latest
+        ports:
+        - containerPort: 8000
